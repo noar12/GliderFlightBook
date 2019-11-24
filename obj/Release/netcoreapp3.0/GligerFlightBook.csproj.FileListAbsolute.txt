@@ -1,0 +1,11 @@
+/home/noar/CSharpProjects/GligerFlightBook/bin/Release/netcoreapp3.0/GligerFlightBook
+/home/noar/CSharpProjects/GligerFlightBook/bin/Release/netcoreapp3.0/GligerFlightBook.deps.json
+/home/noar/CSharpProjects/GligerFlightBook/bin/Release/netcoreapp3.0/GligerFlightBook.runtimeconfig.json
+/home/noar/CSharpProjects/GligerFlightBook/bin/Release/netcoreapp3.0/GligerFlightBook.runtimeconfig.dev.json
+/home/noar/CSharpProjects/GligerFlightBook/bin/Release/netcoreapp3.0/GligerFlightBook.dll
+/home/noar/CSharpProjects/GligerFlightBook/bin/Release/netcoreapp3.0/GligerFlightBook.pdb
+/home/noar/CSharpProjects/GligerFlightBook/obj/Release/netcoreapp3.0/GligerFlightBook.csprojAssemblyReference.cache
+/home/noar/CSharpProjects/GligerFlightBook/obj/Release/netcoreapp3.0/GligerFlightBook.AssemblyInfoInputs.cache
+/home/noar/CSharpProjects/GligerFlightBook/obj/Release/netcoreapp3.0/GligerFlightBook.AssemblyInfo.cs
+/home/noar/CSharpProjects/GligerFlightBook/obj/Release/netcoreapp3.0/GligerFlightBook.dll
+/home/noar/CSharpProjects/GligerFlightBook/obj/Release/netcoreapp3.0/GligerFlightBook.pdb
