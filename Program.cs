@@ -15,6 +15,7 @@ namespace GligerFlightBook
             Console.WriteLine("Landing altitude is:" + TestFlight.LandingHeight() + " [m]");
             Console.WriteLine("The maximum height reached is : " + TestFlight.MaximumHeight() + "[m]");
             Console.WriteLine("The total flown distance is : " + TestFlight.FlownDistance(0)/1000 + " [km]");
+            Console.WriteLine("----------------------");
         }
     }
 }
