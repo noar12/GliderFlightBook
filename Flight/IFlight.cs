@@ -11,17 +11,19 @@ namespace GligerFlightBook.Flight
          {
              get;
          }
-         double FlownDistance(double AverageWindowDistance);
-         double XCDistance();
-         double FAITriangleDistance();
-         double FlatTriangleDistance();
-         double FreeDistance();
-         double MaximumHeight();
-         double MaximumRiseRate(double AverageWindowDistance);
-         double MaximumSinkRate(double AverageWindowDistance);
-         double StartHeight();
-         double LandingHeight();
-         double AltitudeDifference();
+         double GetFlownDistance(double AverageWindowDistance);
+         double GetXCDistance();
+         double GetFAITriangleDistance();
+         double GetFlatTriangleDistance();
+         double GetFreeDistance();
+         double GetMaximumHeight();
+         double GetMaximumRiseRate(double AverageWindowDistance);
+         double GetMaximumSinkRate(double AverageWindowDistance);
+         double GetStartHeight();
+         double GetLandingHeight();
+         double GetAltitudeDifference();
+         string GetCSVExportLine(string GliderName, string TakeOffSite, string LandingSite,
+         string FlightType, string Comment);
 
     }
 }

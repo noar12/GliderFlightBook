@@ -20,3 +20,10 @@
 /home/noar/CSharpProjects/GliderFlightBook/obj/Debug/netcoreapp3.0/GligerFlightBook.AssemblyInfo.cs
 /home/noar/CSharpProjects/GliderFlightBook/obj/Debug/netcoreapp3.0/GligerFlightBook.dll
 /home/noar/CSharpProjects/GliderFlightBook/obj/Debug/netcoreapp3.0/GligerFlightBook.pdb
+/home/noar/CSharpProjects/GliderFlightBook/bin/Debug/netcoreapp3.0/Dapper.dll
+/home/noar/CSharpProjects/GliderFlightBook/bin/Debug/netcoreapp3.0/System.Data.SQLite.dll
+/home/noar/CSharpProjects/GliderFlightBook/bin/Debug/netcoreapp3.0/runtimes/linux-x64/native/netstandard2.0/SQLite.Interop.dll
+/home/noar/CSharpProjects/GliderFlightBook/bin/Debug/netcoreapp3.0/runtimes/osx-x64/native/netstandard2.0/SQLite.Interop.dll
+/home/noar/CSharpProjects/GliderFlightBook/bin/Debug/netcoreapp3.0/runtimes/win-x64/native/netstandard2.0/SQLite.Interop.dll
+/home/noar/CSharpProjects/GliderFlightBook/bin/Debug/netcoreapp3.0/runtimes/win-x86/native/netstandard2.0/SQLite.Interop.dll
+/home/noar/CSharpProjects/GliderFlightBook/obj/Debug/netcoreapp3.0/GligerFlightBook.csproj.CopyComplete

@@ -2,7 +2,7 @@ using System;
 using System.Linq;
 using System.IO;
 using System.Xml.Linq;
-
+using System.Globalization;
 namespace GligerFlightBook.Flight
 {
     public class Flight : IFlight
@@ -29,7 +29,6 @@ namespace GligerFlightBook.Flight
         {
             get
             {
-                Console.WriteLine("Getting FlightFileName through accessor");
                 return _FlightFilename;
             }
             set
@@ -48,7 +47,6 @@ namespace GligerFlightBook.Flight
         {
             get
             {
-                Console.WriteLine("Getting FlightID through accessor");
                 return _FlightID;
             }
         }
@@ -57,7 +55,7 @@ namespace GligerFlightBook.Flight
             // to do: make a guid for the flightID
             _FlightID = 123;
         }
-        public double FlownDistance(double AverageWindowDistance)
+        public double GetFlownDistance(double AverageWindowDistance)
         {
             double[] dxyz = new double[_FlightHeights.Length-1];
             for(int i=0;i<_FlightHeights.Length-2;++i)
@@ -69,55 +67,70 @@ namespace GligerFlightBook.Flight
             }
             return dxyz.Sum();
         }
-        public double XCDistance()
+        public double GetCumulativeElevation()
+        {
+            double CumulativeElevation = 0;
+            double mindHForElevation = 0.01;
+            for(int i=1;i <_FlightHeights.Length;++i)
+            {
+                if (_FlightHeights[i]>_FlightHeights[i-1]+mindHForElevation)
+                {
+                    CumulativeElevation = CumulativeElevation + (_FlightHeights[i]-_FlightHeights[i-1]);
+                }
+            }
+            return CumulativeElevation;
+        }
+        public double GetXCDistance()
                 {
             // to be done
             return 0;
         }
-        public double FAITriangleDistance()
+        public double GetFAITriangleDistance()
                 {
             // to be done
             return 0;
         }
-        public double FlatTriangleDistance()
+        public double GetFlatTriangleDistance()
                 {
             // to be done
             return 0;
         }
-        public double FreeDistance()
+        public double GetFreeDistance()
                 {
             // to be done
             return 0;
         }
-        public double MaximumHeight()
+        public double GetMaximumHeight()
                 {
-            // to be done 
             return _FlightHeights.Max();
         }
-        public double MaximumRiseRate(double AverageWindowDistance)
+        public double GetMaximumRiseRate(double AverageWindowDistance)
         {
             // to be done
             return 0;
         }
-        public double MaximumSinkRate(double AverageWindowDistance)
+        public double GetMaximumSinkRate(double AverageWindowDistance)
         {
             // to be done
             return 0;
         }
-        public double StartHeight()
+        public double GetStartHeight()
         {
             return _FlightHeights[0];
         }
-        public double LandingHeight()
+        public double GetLandingHeight()
         {
             return _FlightHeights[_FlightHeights.Length-1];
         }
-        public double AltitudeDifference()
+        public double GetAltitudeDifference()
                 {
-            // to be done
-            return 0;
+            
+            return GetStartHeight() - GetLandingHeight();
         }
-    
+        public TimeSpan GetDuration()
+        {
+            return _FlightTraceTimestamp[_FlightTraceTimestamp.Length-1]-_FlightTraceTimestamp[0];
+        }
         private void ImportFromKMLFile()
         {
             XDocument KMLData = XDocument.Load(_WorkingFolderPath+FlightFilename);
@@ -184,6 +197,34 @@ namespace GligerFlightBook.Flight
             double a = Math.Pow(Math.Sin(deltaLong/2),2) + Math.Pow(Math.Sin(deltaLat/2),2) * Math.Cos(long1) * Math.Cos(long2);
             double c = 2 * Math.Atan2(Math.Sqrt(a),Math.Sqrt(1-a));
             return R * c;
+        }
+        public string GetCSVExportLine(string GliderName, string TakeOffSite, string LandingSite,
+         string FlightType, string Comment)
+        {
+            CultureInfo CH = new CultureInfo("en-EN");
+            string delimiter = ";";
+            string TakeOffDate = _FlightTraceTimestamp[0].ToString("s");
+            string TakeOffHeight = _FlightHeights[0].ToString("F0");
+            string MaximumHeight = GetMaximumHeight().ToString("F0");
+            string CumulativeElevation = GetCumulativeElevation().ToString("F0");
+            string FlownDistance = (GetFlownDistance(0)/1000).ToString("F3", CH);
+            string HeightDifference = GetAltitudeDifference().ToString("F0");
+            string Duration = GetDuration().ToString("c");
+
+            return TakeOffDate + delimiter 
+            + GliderName + delimiter
+            + TakeOffSite + delimiter
+            + TakeOffHeight +delimiter
+            + CumulativeElevation + delimiter
+            + MaximumHeight + delimiter
+            + LandingSite + delimiter
+            + FlownDistance + delimiter
+            + HeightDifference + delimiter
+            + FlightType + delimiter
+            + Duration + delimiter
+            + Comment + delimiter
+            + _FlightFilename +delimiter;
+
         }
     }
 }
