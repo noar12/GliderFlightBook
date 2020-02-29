@@ -79,9 +79,20 @@ namespace GliderFlightBook
             }
 
             Console.WriteLine("Test sqlite database reading:");
+            //GliderModel Newglider = new GliderModel(0, "TestBranhjdd", "TedfhsstModel", "TestEnCertadfhadfhgification");
+            //SqliteDataAccess.SaveGlider(Newglider);
             List<GliderModel> MyGliderCollection = SqliteDataAccess.LoadGliders();
-            Console.WriteLine("to be done");
-
+            foreach (GliderModel Glider in MyGliderCollection)
+            {
+                Console.WriteLine(Glider.LongGliderName);
+            }
+            // SiteModel NewSite = new SiteModel(0,"Macolin", 47.139035, 7.204152, 954, 50);
+            // SqliteDataAccess.SaveSite(NewSite);
+List<SiteModel> MySiteCollection = SqliteDataAccess.LoadSites();
+            foreach (SiteModel Site in MySiteCollection)
+            {
+                Console.WriteLine(Site.SiteName);
+            }
         }
     }
 }

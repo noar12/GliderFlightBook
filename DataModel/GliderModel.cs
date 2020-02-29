@@ -1,8 +1,4 @@
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 
 namespace GliderFlightBook
@@ -16,11 +12,12 @@ namespace GliderFlightBook
             this.Model = Model;
             this.EnCertification = EnCertification;
         }
-        int GliderID;
-        string Brand;
-        string Model;
-        string EnCertification;
-        string LongGliderName
+        public int GliderID;
+
+        public string Brand;
+        public string Model;
+        public string EnCertification;
+        public string LongGliderName
         {
             get
             {
