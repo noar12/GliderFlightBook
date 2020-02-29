@@ -3,7 +3,8 @@ using System.Linq;
 using System.IO;
 using System.Xml.Linq;
 using System.Globalization;
-namespace GligerFlightBook.Flight
+
+namespace GliderFlightBook.Flight
 {
     public class Flight : IFlight
     {

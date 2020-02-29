@@ -1,40 +1,60 @@
 ﻿using System;
+using System.Collections.Generic;
 
-namespace GligerFlightBook
+namespace GliderFlightBook
 {
     class Program
     {
-        
+
         static void Main(string[] args)
         {
-            
+
+
             Flight.Flight._WorkingFolderPath = @"/home/noar/Documents/parapente/Traces/";
             string[] KmlFileName = {
-                "2020-01-25-XTR-9DC0890216A9-01.KML",
-                "2020-02-08-XTR-9DC0890216A9-01.KML",
-                "2020-02-15-XTR-9DC0890216A9-01.KML"
+                "2020-02-24-XTR-9DC0890216A9-01.KML",
+                "2020-02-24-XTR-9DC0890216A9-02.KML",
+                "2020-02-24-XTR-9DC0890216A9-03.KML",
+                "2020-02-24-XTR-9DC0890216A9-04.KML",
+                "2020-02-24-XTR-9DC0890216A9-05.KML",
+                "2020-02-24-XTR-9DC0890216A9-06.KML"
                 };
             string[] GliderName = {
-                "Mescal4",
+                "Epsilon 9",
+                "Epsilon 9",
+                "Epsilon 9",
+                "Epsilon 9",
                 "Epsilon 9",
                 "Epsilon 9"
             };
             string[] TakeOffSiteName = {
-                "Montoz Sud",
-                "Boujean Est",
-                "Boujean Est"
+                "Oeschinen",
+                "Oeschinen",
+                "Oeschinen",
+                "Oeschinen",
+                "Oeschinen",
+                "Oeschinen"
             };
             string[] LandingSiteName = {
-                "La Heute",
-                "Boujean",
-                "Boujean"
+                "Kandersteg",
+                "Kandersteg",
+                "Kandersteg",
+                "Kandersteg",
+                "Kandersteg",
+                "Kandersteg"
             };
             string[] FlightType = {
-                "HF",
-                "HF",
-                "HF"
+                "Local",
+                "Local",
+                "Local",
+                "Local",
+                "Local",
+                "Local"
             };
             string[] Comment = {
+                "",
+                "",
+                "",
                 "",
                 "",
                 ""
@@ -57,7 +77,11 @@ namespace GligerFlightBook
                                                                 Comment[index]));
                 ++index;
             }
-            ;
+
+            Console.WriteLine("Test sqlite database reading:");
+            List<GliderModel> MyGliderCollection = SqliteDataAccess.LoadGliders();
+            Console.WriteLine("to be done");
+
         }
     }
 }

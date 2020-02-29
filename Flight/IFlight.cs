@@ -1,4 +1,4 @@
-namespace GligerFlightBook.Flight
+namespace GliderFlightBook.Flight
 {
     public interface IFlight
     {
