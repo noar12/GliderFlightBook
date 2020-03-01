@@ -1,3 +1,5 @@
+using System;
+
 namespace GliderFlightBook.Flight
 {
     public interface IFlight
@@ -11,6 +13,7 @@ namespace GliderFlightBook.Flight
          {
              get;
          }
+         string GetTakeOffDateString();
          double GetFlownDistance(double AverageWindowDistance);
          double GetXCDistance();
          double GetFAITriangleDistance();
@@ -21,6 +24,8 @@ namespace GliderFlightBook.Flight
          double GetMaximumSinkRate(double AverageWindowDistance);
          double GetStartHeight();
          double GetLandingHeight();
+         TimeSpan GetDuration();
+         double GetCumulativeElevation();
          double GetAltitudeDifference();
          string GetCSVExportLine(string GliderName, string TakeOffSite, string LandingSite,
          string FlightType, string Comment);

@@ -26,6 +26,10 @@ namespace GliderFlightBook.Flight
         private DateTime[] _FlightTraceTimestamp;
         private static TimeSpan _KmlTimeSpan = new TimeSpan(0,0,0,0,200);
         private static double _EarthRadius = 6371000;
+        public string GetTakeOffDateString ()
+        {
+            return _FlightTraceTimestamp[0].ToString("s");
+        }
         public string FlightFilename
         {
             get
@@ -34,7 +38,7 @@ namespace GliderFlightBook.Flight
             }
             set
             {
-                if (File.Exists(_WorkingFolderPath+value))
+                if (File.Exists(_WorkingFolderPath + "/" + value))
                 {
                     _FlightFilename = value;
                 }
@@ -134,7 +138,7 @@ namespace GliderFlightBook.Flight
         }
         private void ImportFromKMLFile()
         {
-            XDocument KMLData = XDocument.Load(_WorkingFolderPath+FlightFilename);
+            XDocument KMLData = XDocument.Load(_WorkingFolderPath+ "/" + FlightFilename);
             XNamespace ns = KMLData.Root.Name.Namespace;
             //kml/Placemark/MultiGeometry/LineString/coordinates
             var KMLLineStrings = KMLData.Element(ns + "kml")
@@ -204,7 +208,7 @@ namespace GliderFlightBook.Flight
         {
             CultureInfo CH = new CultureInfo("en-EN");
             string delimiter = ";";
-            string TakeOffDate = _FlightTraceTimestamp[0].ToString("s");
+            string TakeOffDate = GetTakeOffDateString();
             string TakeOffHeight = _FlightHeights[0].ToString("F0");
             string MaximumHeight = GetMaximumHeight().ToString("F0");
             string CumulativeElevation = GetCumulativeElevation().ToString("F0");

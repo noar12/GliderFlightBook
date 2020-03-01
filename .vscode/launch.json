@@ -10,9 +10,9 @@
             "request": "launch",
             "preLaunchTask": "build",
             "program": "${workspaceFolder}/bin/Debug/netcoreapp3.0/GliderFlightBook.dll",
-            "args": [],
+            "args": ["${workspaceFolder}/WorkingDirectoryForTest"],
             "cwd": "${workspaceFolder}",
-            "console": "internalConsole",
+            "console": "externalTerminal",
             "stopAtEntry": false
         },
         {
