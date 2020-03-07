@@ -29,6 +29,18 @@ namespace GliderFlightBook.Flight
             get;
             set;
         }
+        double[] FlightLatitudes
+        {
+            get;
+        }
+        double[] FlightLongitudes
+        {
+            get;
+        }
+        double[] FlightHeights
+        {
+            get;
+        }
         string GetTakeOffDateString();
         double GetFlownDistance(double AverageWindowDistance);
         double GetXCDistance();

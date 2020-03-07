@@ -32,6 +32,7 @@ namespace GliderFlightBook
                     
                     
                     // User can choose a type of flight between Local:0 XC:1 or HF:2
+                    // to be done FlightType must be an enum
                     int FlightType = LogBookConsoleInterract.ChooseFlightType();
 
                     //Instance a new Flight based on kml file

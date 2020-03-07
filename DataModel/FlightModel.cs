@@ -2,7 +2,7 @@ namespace GliderFlightBook
 {
     public class FlightModel
     {
-        public FlightModel(int FlightID, int TakeOffSiteID, int LandingSiteID, int GliderID, string Date,
+        public FlightModel(int FlightID, int TakeOffSiteID, int LandingSiteID, int GliderID, string TakeOffDateTime,
         double FlownDistance, double FlightDuration, double CumulatedElevation,
         double MaxAltitude, string File, int FlightType, string Comment)
         {
@@ -10,7 +10,7 @@ namespace GliderFlightBook
             this.TakeOffSiteID = TakeOffSiteID;
             this.LandingSiteID = LandingSiteID;
             this.GliderID = GliderID;
-            this.Date = Date;
+            this.TakeOffDateTime = TakeOffDateTime;
             this.FlownDistance = FlownDistance;
             this.FlightDuration = FlightDuration;
             this.CumulatedElevation = CumulatedElevation;
@@ -23,7 +23,7 @@ namespace GliderFlightBook
         public int TakeOffSiteID;
         public int LandingSiteID;
         public int GliderID;
-        public string Date;
+        public string TakeOffDateTime;
         public double FlownDistance;
         public double FlightDuration;
         public double CumulatedElevation;

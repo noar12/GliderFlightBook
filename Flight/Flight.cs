@@ -8,7 +8,7 @@ namespace GliderFlightBook.Flight
 {
     public class Flight : IFlight
     {
-        public Flight(string FlightFileName,int TakeOffSiteID, int LandingSiteID, int GliderID, int FlightType)
+        public Flight(string FlightFileName, int TakeOffSiteID, int LandingSiteID, int GliderID, int FlightType)
         {
             this.FlightFilename = FlightFileName;
             ImportFromKMLFile();
@@ -230,7 +230,7 @@ namespace GliderFlightBook.Flight
             Console.WriteLine("Take off date/Time (local): " + GetTakeOffDateString());
             Console.WriteLine("Take off site: " + SqliteDataAccess.LoadSite(TakeOffSiteID).SiteName);
             Console.WriteLine("Landing site: " + SqliteDataAccess.LoadSite(LandingSiteID).SiteName); // to be done better. use a method to get site and glider by id directly from the data base
-            Console.WriteLine("Glider used: " +SqliteDataAccess.LoadGlider(GliderID).LongGliderName);
+            Console.WriteLine("Glider used: " + SqliteDataAccess.LoadGlider(GliderID).LongGliderName);
             Console.WriteLine("Flown distance [km]: " + (GetFlownDistance(0) / 1000).ToString("F3"));
             Console.WriteLine("Flight duration: " + GetDuration().ToString("c"));
             Console.WriteLine("Cumulated elevation during flight [m]: " + GetCumulativeElevation());
@@ -243,41 +243,69 @@ namespace GliderFlightBook.Flight
             {
                 return _TakeOffSiteID;
             }
-            set{
+            set
+            {
                 // to be done: some check before setting
                 _TakeOffSiteID = value;
             }
         }
         public int LandingSiteID
         {
-            get{
+            get
+            {
                 return _LandingSiteID;
             }
-            set{
+            set
+            {
                 // to be done: some check before setting
                 _LandingSiteID = value;
             }
         }
         public int GliderID
         {
-            get{
+            get
+            {
                 return _GliderID;
             }
-            set{
+            set
+            {
                 // to be done: some check before setting
                 _GliderID = value;
             }
         }
         public int FlightType
         {
-            get{
+            get
+            {
                 return _FlightType;
             }
-            set{
+            set
+            {
                 // to be done: some check before setting
                 _FlightType = value;
             }
         }
-    }
-    
+        public double[] FlightLatitudes
+        {
+            get
+            {
+                return _FlightLatitudes;
+            }
+        }
+        public double[] FlightLongitudes
+        {
+            get
+            {
+                return _FlightLongitudes;
+            }
+        }
+        public double[] FlightHeights
+        {
+            get
+            {
+                return _FlightHeights;
+            }
+        }
+    }   
+
 }

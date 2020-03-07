@@ -13,7 +13,7 @@ namespace GliderFlightBook
 {
     public class SqliteDataAccess
     {
-        static string DBDirectory = ""; 
+        static string DBDirectory = "";
         public static List<GliderModel> LoadGliders()
         {
             string SqliteCmd = "select GliderID, Brand, Model, EnCertification  from Glider";
@@ -69,13 +69,13 @@ namespace GliderFlightBook
         public static List<SiteModel> LoadSites()
         {
             string SqliteCmd = "select SiteID, SiteName, Latitude, Longitude, Altitude, Radius from Site";
-            
+
             using var connection = new SQLiteConnection(LoadConnectionString());
             connection.Open();
             using var cmd = new SQLiteCommand(SqliteCmd, connection);
             using SQLiteDataReader reader = cmd.ExecuteReader();
             List<SiteModel> Sites = new List<SiteModel>();
-            while(reader.Read())
+            while (reader.Read())
             {
                 Sites.Add(new SiteModel(reader.GetInt32(0),
                                         reader.GetString(1),
@@ -124,14 +124,14 @@ namespace GliderFlightBook
 
         public static List<FlightModel> LoadFlights()
         {
-            string SqliteCmd = "select FlightID, TakeOffSiteID, LandingSiteID, GliderID, Date, FlownDistance, FlightDuration, CumulatedElevation, MaxAltitude, File, FlightType, Comment from Flight";
+            string SqliteCmd = "select FlightID, TakeOffSiteID, LandingSiteID, GliderID, TakeOffDateTime, FlownDistance, FlightDuration, CumulatedElevation, MaxAltitude, File, FlightType, Comment from Flight";
 
             using var connection = new SQLiteConnection(LoadConnectionString());
             connection.Open();
             using var cmd = new SQLiteCommand(SqliteCmd, connection);
             using SQLiteDataReader reader = cmd.ExecuteReader();
             List<FlightModel> Flights = new List<FlightModel>();
-            while(reader.Read())
+            while (reader.Read())
             {
                 Flights.Add(new FlightModel(reader.GetInt32(0),
                                             reader.GetInt32(1),
@@ -149,15 +149,39 @@ namespace GliderFlightBook
             return Flights;
         }
 
+        public static FlightModel LoadLastSavedFlight()
+        {
+            string SqliteCmd = "SELECT FlightID, TakeOffSiteID, LandingSiteID, GliderID, TakeOffDateTime, FlownDistance, FlightDuration, CumulatedElevation, MaxAltitude, File, FlightType, Comment FROM Flight Where FlightID = (SELECT MAX(FlightID) FROM Flight)";
+
+            using var connection = new SQLiteConnection(LoadConnectionString());
+            connection.Open();
+            using var cmd = new SQLiteCommand(SqliteCmd, connection);
+            using SQLiteDataReader reader = cmd.ExecuteReader();
+            reader.Read();
+            FlightModel LastFlight = new FlightModel(reader.GetInt32(0),
+                                            reader.GetInt32(1),
+                                            reader.GetInt32(2),
+                                            reader.GetInt32(3),
+                                            reader.GetString(4),
+                                            reader.GetDouble(5),
+                                            reader.GetDouble(6),
+                                            reader.GetDouble(7),
+                                            reader.GetDouble(8),
+                                            reader.GetString(9),
+                                            reader.GetInt32(10),
+                                            reader.GetString(11));
+            return LastFlight;
+        }
+
         public static void SaveFlights(FlightModel flight)
         {
             CultureInfo CH = new CultureInfo("en-EN");
 
-            string SqliteCmd = "insert into Flight (TakeOffSiteID, LandingSiteID, GliderID, Date, FlownDistance, FlightDuration, CumulatedElevation, MaxAltitude, File, FlightType, Comment) values("
+            string SqliteCmd = "insert into Flight (TakeOffSiteID, LandingSiteID, GliderID, TakeOffDateTime, FlownDistance, FlightDuration, CumulatedElevation, MaxAltitude, File, FlightType, Comment) values("
             + flight.TakeOffSiteID + ", "
             + flight.LandingSiteID + ", "
             + flight.GliderID + ", '"
-            + flight.Date + "', "
+            + flight.TakeOffDateTime + "', "
             + flight.FlownDistance.ToString(CH) + ", "
             + flight.FlightDuration.ToString(CH) + ", "
             + flight.CumulatedElevation.ToString(CH) + ", "
@@ -175,13 +199,13 @@ namespace GliderFlightBook
         public static List<TraceSampleModel> LoadTraceByFlightID(int FlightID)
         {
             string SqliteCmd = "select SampleID, FlightID, Latitude, Longitude, Altitude from TraceSample where FlightID = " + FlightID;
-            
+
             using var connection = new SQLiteConnection(LoadConnectionString());
             connection.Open();
             using var cmd = new SQLiteCommand(SqliteCmd, connection);
             using SQLiteDataReader reader = cmd.ExecuteReader();
             List<TraceSampleModel> TraceSamples = new List<TraceSampleModel>();
-            while(reader.Read())
+            while (reader.Read())
             {
                 TraceSamples.Add(new TraceSampleModel(reader.GetInt32(0),
                                                         reader.GetInt32(1),
@@ -196,7 +220,7 @@ namespace GliderFlightBook
         {
             CultureInfo CH = new CultureInfo("en-EN");
 
-            string SqliteCmd ="INSERT INTO TraceSample (FlightID, Latitude, Longitude, Altitude) VALUES ("
+            string SqliteCmd = "INSERT INTO TraceSample (FlightID, Latitude, Longitude, Altitude) VALUES ("
                 + TraceSample.FlightID + ", "
                 + TraceSample.Latitude.ToString(CH) + ", "
                 + TraceSample.Longitude.ToString(CH) + ", "
@@ -205,6 +229,30 @@ namespace GliderFlightBook
             connection.Open();
             using var cmd = new SQLiteCommand(SqliteCmd, connection);
             cmd.ExecuteNonQuery();
+        }
+        public static void SaveFlightTraceSamples(List<TraceSampleModel> FlightTrace)
+        {
+            CultureInfo CH = new CultureInfo("en-EN");
+            using var connection = new SQLiteConnection(LoadConnectionString());
+            connection.Open();
+            string SqliteCmd = "BEGIN TRANSACTION;";
+            using var cmd = new SQLiteCommand(SqliteCmd, connection);
+            cmd.CommandText = SqliteCmd;
+            cmd.ExecuteNonQuery();
+            foreach (TraceSampleModel TraceSample in FlightTrace)
+            {
+                SqliteCmd = "INSERT INTO TraceSample (FlightID, Latitude, Longitude, Altitude) VALUES ("
+                + TraceSample.FlightID + ","
+                + TraceSample.Latitude.ToString(CH) + ","
+                + TraceSample.Longitude.ToString(CH) + ","
+                + TraceSample.Altitude.ToString(CH) + ");";
+                cmd.CommandText = SqliteCmd;
+                cmd.ExecuteNonQuery();
+            }
+            SqliteCmd = "COMMIT;";
+            cmd.CommandText = SqliteCmd;
+            cmd.ExecuteNonQuery();
+
         }
         private static string LoadConnectionString()
         {

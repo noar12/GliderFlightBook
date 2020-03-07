@@ -103,6 +103,14 @@ namespace GliderFlightBook
                         Flight.GetFlownDistance(0), Flight.GetDuration().TotalSeconds,Flight.GetCumulativeElevation(),
                         Flight.GetMaximumHeight(), Flight.FlightFilename,Flight.FlightType,Comment);
                         SqliteDataAccess.SaveFlights(Myflight);
+
+                        int FlightID = SqliteDataAccess.LoadLastSavedFlight().FlightID;
+                        List<TraceSampleModel> FlightTrace = new List<TraceSampleModel>();
+                        for(int i=0;i<Flight.FlightHeights.Length;++i)
+                        {
+                            FlightTrace.Add(new TraceSampleModel(0,FlightID,Flight.FlightLatitudes[i],Flight.FlightLongitudes[i],Flight.FlightHeights[i]));
+                        }
+                        SqliteDataAccess.SaveFlightTraceSamples(FlightTrace);
                         Console.WriteLine("Data written");
                         
                     }
