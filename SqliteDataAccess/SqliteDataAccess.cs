@@ -35,7 +35,21 @@ namespace GliderFlightBook
 
 
         }
+        public static GliderModel LoadGlider(int GliderID)
+        {
+            string SqliteCmd = "SELECT GliderID, Brand, Model, EnCertification FROM Glider WHERE GliderID = " + GliderID;
 
+            using var connection = new SQLiteConnection(LoadConnectionString());
+            connection.Open();
+            using var cmd = new SQLiteCommand(SqliteCmd, connection);
+            using SQLiteDataReader reader = cmd.ExecuteReader();
+            reader.Read();
+            GliderModel Glider = new GliderModel(reader.GetInt32(0),
+                                                reader.GetString(1),
+                                                reader.GetString(2),
+                                                reader.GetString(3));
+            return Glider;
+        }
         public static void SaveGlider(GliderModel glider)
         {
             string SqliteCmd = "insert into Glider (Brand, Model, EnCertification) values('"
@@ -72,6 +86,23 @@ namespace GliderFlightBook
             }
             return Sites;
         }
+        public static SiteModel LoadSite(int SiteID)
+        {
+            string SqliteCmd = "SELECT SiteID, SiteName, Latitude, Longitude, Altitude, Radius FROM Site WHERE SiteID = " + SiteID;
+
+            using var connection = new SQLiteConnection(LoadConnectionString());
+            connection.Open();
+            using var cmd = new SQLiteCommand(SqliteCmd, connection);
+            using SQLiteDataReader reader = cmd.ExecuteReader();
+            reader.Read();
+            SiteModel Site = new SiteModel(reader.GetInt32(0),
+                                        reader.GetString(1),
+                                        reader.GetFloat(2),
+                                        reader.GetFloat(3),
+                                        reader.GetFloat(4),
+                                        reader.GetFloat(5));
+            return Site;
+        }
         public static void SaveSite(SiteModel site)
         {
             CultureInfo CH = new CultureInfo("en-EN");
@@ -93,7 +124,7 @@ namespace GliderFlightBook
 
         public static List<FlightModel> LoadFlights()
         {
-            string SqliteCmd = "select FlightID, SiteID, GliderID, Date, XContestType, XContestPoint, XContestDistance, FlownDistance, FlightDuration, CumulatedElevation, MaxAltitude, File, FlightType, Comment from Flight";
+            string SqliteCmd = "select FlightID, TakeOffSiteID, LandingSiteID, GliderID, Date, FlownDistance, FlightDuration, CumulatedElevation, MaxAltitude, File, FlightType, Comment from Flight";
 
             using var connection = new SQLiteConnection(LoadConnectionString());
             connection.Open();
@@ -105,17 +136,15 @@ namespace GliderFlightBook
                 Flights.Add(new FlightModel(reader.GetInt32(0),
                                             reader.GetInt32(1),
                                             reader.GetInt32(2),
-                                            reader.GetString(3),
-                                            reader.GetInt32(4),
+                                            reader.GetInt32(3),
+                                            reader.GetString(4),
                                             reader.GetDouble(5),
                                             reader.GetDouble(6),
                                             reader.GetDouble(7),
                                             reader.GetDouble(8),
-                                            reader.GetDouble(9),
-                                            reader.GetDouble(10),
-                                            reader.GetString(11),
-                                            reader.GetInt32(12),
-                                            reader.GetString(13)));
+                                            reader.GetString(9),
+                                            reader.GetInt32(10),
+                                            reader.GetString(11)));
             }
             return Flights;
         }
@@ -124,13 +153,11 @@ namespace GliderFlightBook
         {
             CultureInfo CH = new CultureInfo("en-EN");
 
-            string SqliteCmd = "insert into Flight (SiteID, GliderID, Date, XContestType, XContestPoint, XContestDistance, FlownDistance, FlightDuration, CumulatedElevation, MaxAltitude, File, FlightType, Comment) values("
-            + flight.SiteID + ", "
+            string SqliteCmd = "insert into Flight (TakeOffSiteID, LandingSiteID, GliderID, Date, FlownDistance, FlightDuration, CumulatedElevation, MaxAltitude, File, FlightType, Comment) values("
+            + flight.TakeOffSiteID + ", "
+            + flight.LandingSiteID + ", "
             + flight.GliderID + ", '"
             + flight.Date + "', "
-            + flight.XContestType + ", "
-            + flight.XContestPoint.ToString(CH) + ", "
-            + flight.XContestDistance.ToString(CH) + ", "
             + flight.FlownDistance.ToString(CH) + ", "
             + flight.FlightDuration.ToString(CH) + ", "
             + flight.CumulatedElevation.ToString(CH) + ", "
