@@ -5,7 +5,7 @@ namespace GliderFlightBook
 {
     public class GliderModel
     {
-        public GliderModel(int GliderID, string Brand, string Model, string EnCertification)
+        public GliderModel(int GliderID, string Brand, string Model, int EnCertification)
         {
             this.GliderID = GliderID;
             this.Brand = Brand;
@@ -16,7 +16,7 @@ namespace GliderFlightBook
 
         public string Brand;
         public string Model;
-        public string EnCertification;
+        public int EnCertification;
         public string LongGliderName
         {
             get

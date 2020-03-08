@@ -1,11 +1,18 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.IO;
+using System.Globalization;
 
 namespace GliderFlightBook
 {
-    class Program
+    public static class Globals
     {
+        public static CultureInfo CultureEN = new CultureInfo("en-EN");
+        public static NumberStyles NumberStyle = NumberStyles.Float;
+    }
+        class Program
+    {
+        
 
         static void Main(string[] args)
         {
