@@ -13,6 +13,8 @@ namespace GliderFlightBook
 {
     public class SqliteDataAccess
     {
+        public static CultureInfo CultureEN = new CultureInfo("en-EN");
+        public static NumberStyles NumberStyle = NumberStyles.Float;
         static string DBDirectory = "";
         public static List<GliderModel> LoadGliders()
         {
@@ -138,10 +140,10 @@ namespace GliderFlightBook
         {
             string SqliteCmd = "insert into Site (SiteName, Latitude, Longitude, Altitude, Radius) values('"
             + site.SiteName + "' , "
-            + site.Latitude.ToString(Globals.CultureEN) + " , "
-            + site.Longitude.ToString(Globals.CultureEN) + " ,"
-            + site.Altitude.ToString(Globals.CultureEN) + " ,"
-            + site.Radius.ToString(Globals.CultureEN) + ")";
+            + site.Latitude.ToString(CultureEN) + " , "
+            + site.Longitude.ToString(CultureEN) + " ,"
+            + site.Altitude.ToString(CultureEN) + " ,"
+            + site.Radius.ToString(CultureEN) + ")";
 
             using var connection = new SQLiteConnection(LoadConnectionString());
             connection.Open();
@@ -205,16 +207,16 @@ namespace GliderFlightBook
 
         public static void SaveFlights(FlightModel flight)
         {
-            
+
             string SqliteCmd = "insert into Flight (TakeOffSiteID, LandingSiteID, GliderID, TakeOffDateTime, FlownDistance, FlightDuration, CumulatedElevation, MaxAltitude, File, FlightType, Comment) values("
             + flight.TakeOffSiteID + ", "
             + flight.LandingSiteID + ", "
             + flight.GliderID + ", '"
             + flight.TakeOffDateTime + "', "
-            + flight.FlownDistance.ToString(Globals.CultureEN) + ", "
-            + flight.FlightDuration.ToString(Globals.CultureEN) + ", "
-            + flight.CumulatedElevation.ToString(Globals.CultureEN) + ", "
-            + flight.MaxAltitude.ToString(Globals.CultureEN) + ", '"
+            + flight.FlownDistance.ToString(CultureEN) + ", "
+            + flight.FlightDuration.ToString(CultureEN) + ", "
+            + flight.CumulatedElevation.ToString(CultureEN) + ", "
+            + flight.MaxAltitude.ToString(CultureEN) + ", '"
             + flight.File + "', "
             + flight.FlightType + ", '"
             + flight.Comment + "')";
@@ -247,13 +249,13 @@ namespace GliderFlightBook
 
         public static void SaveTraceSample(TraceSampleModel TraceSample)
         {
-            
+
 
             string SqliteCmd = "INSERT INTO TraceSample (FlightID, Latitude, Longitude, Altitude) VALUES ("
                 + TraceSample.FlightID + ", "
-                + TraceSample.Latitude.ToString(Globals.CultureEN) + ", "
-                + TraceSample.Longitude.ToString(Globals.CultureEN) + ", "
-                + TraceSample.Altitude.ToString(Globals.CultureEN) + ")";
+                + TraceSample.Latitude.ToString(CultureEN) + ", "
+                + TraceSample.Longitude.ToString(CultureEN) + ", "
+                + TraceSample.Altitude.ToString(CultureEN) + ")";
             using var connection = new SQLiteConnection(LoadConnectionString());
             connection.Open();
             using var cmd = new SQLiteCommand(SqliteCmd, connection);
@@ -271,9 +273,9 @@ namespace GliderFlightBook
             {
                 SqliteCmd = "INSERT INTO TraceSample (FlightID, Latitude, Longitude, Altitude) VALUES ("
                 + TraceSample.FlightID + ","
-                + TraceSample.Latitude.ToString(Globals.CultureEN) + ","
-                + TraceSample.Longitude.ToString(Globals.CultureEN) + ","
-                + TraceSample.Altitude.ToString(Globals.CultureEN) + ");";
+                + TraceSample.Latitude.ToString(CultureEN) + ","
+                + TraceSample.Longitude.ToString(CultureEN) + ","
+                + TraceSample.Altitude.ToString(CultureEN) + ");";
                 cmd.CommandText = SqliteCmd;
                 cmd.ExecuteNonQuery();
             }

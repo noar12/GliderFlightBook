@@ -19,9 +19,8 @@
             "type": "process",
             "args": [
                 "publish",
-                "${workspaceFolder}/GliderFlightBook.csproj",
-                "/property:GenerateFullPaths=true",
-                "/consoleloggerparameters:NoSummary"
+                "-c", "Release",
+                "-o", "${workspaceFolder}/bin/Release/netcoreapp3.0"
             ],
             "problemMatcher": "$msCompile"
         },

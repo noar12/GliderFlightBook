@@ -2,11 +2,13 @@ using System;
 using System.IO;
 using System.Linq;
 using System.Collections.Generic;
-
+using System.Globalization;
 namespace GliderFlightBook
 {
     public class LogBookConsoleInterract
     {
+        public static CultureInfo CultureEN = new CultureInfo("en-EN");
+        public static NumberStyles NumberStyle = NumberStyles.Float;
 
         public static string ChooseFileToImport()
         {
@@ -16,7 +18,7 @@ namespace GliderFlightBook
             var orderedFiles = filesInfo.OrderBy(f => f.CreationTime);
             // propose file to import for the user
             int i = 0;
-            foreach(var file in orderedFiles)
+            foreach (var file in orderedFiles)
             {
                 Console.WriteLine(i + ": " + file.Name);
                 ++i;
@@ -151,7 +153,7 @@ namespace GliderFlightBook
             Console.WriteLine("What is the new site latitude in [°]?");
             answer = Console.ReadLine();
             double SiteLatitude;
-            while (!double.TryParse(answer, Globals.NumberStyle, Globals.CultureEN, out SiteLatitude))
+            while (!double.TryParse(answer, NumberStyle, CultureEN, out SiteLatitude))
             {
                 Console.WriteLine("Latitude must be a real number");
                 answer = Console.ReadLine();
@@ -159,7 +161,7 @@ namespace GliderFlightBook
             Console.WriteLine("What is the new site longitude in [°]?");
             answer = Console.ReadLine();
             double SiteLongitude;
-            while (!double.TryParse(answer, Globals.NumberStyle, Globals.CultureEN, out SiteLongitude))
+            while (!double.TryParse(answer, NumberStyle, CultureEN, out SiteLongitude))
             {
                 Console.WriteLine("Longitude must be a real number");
                 answer = Console.ReadLine();
@@ -167,7 +169,7 @@ namespace GliderFlightBook
             Console.WriteLine("Waht is the new site altitude in [m]?");
             answer = Console.ReadLine();
             double SiteAltitude;
-            while (!double.TryParse(answer, Globals.NumberStyle, Globals.CultureEN, out SiteAltitude))
+            while (!double.TryParse(answer, NumberStyle, CultureEN, out SiteAltitude))
             {
                 Console.WriteLine("Altitude must be a real number");
                 answer = Console.ReadLine();
@@ -175,7 +177,7 @@ namespace GliderFlightBook
             Console.WriteLine("What is the new site radius in [m]? Typical value is 50[m]");
             answer = Console.ReadLine();
             double SiteRadius;
-            while (!double.TryParse(answer, Globals.NumberStyle, Globals.CultureEN, out SiteRadius))
+            while (!double.TryParse(answer, NumberStyle, CultureEN, out SiteRadius))
             {
                 Console.WriteLine("Site radius must be a real number");
                 answer = Console.ReadLine();
@@ -191,16 +193,16 @@ namespace GliderFlightBook
             Console.WriteLine("What is the brand of the new glider?");
             string Brand = Console.ReadLine();
             Console.WriteLine("What is the model of the new glider?");
-            string Model  = Console.ReadLine();
+            string Model = Console.ReadLine();
             Console.WriteLine("What is the EN certifcation of the new glider? [0 = not certified, 1 = A, 2 = B, 3 = C, 4 = D or 5 = CCC]");
             string answer = Console.ReadLine();
             int EnCertification;
-            while(!Int32.TryParse(answer, out EnCertification))
+            while (!Int32.TryParse(answer, out EnCertification))
             {
                 Console.WriteLine("EN Certification must be one of the following: [0 = not certified, 1 = A, 2 = B, 3 = C, 4 = D or 5 = CCC]");
                 answer = Console.ReadLine();
             }
-            GliderModel NewGlider  = new GliderModel(0, Brand, Model, EnCertification);
+            GliderModel NewGlider = new GliderModel(0, Brand, Model, EnCertification);
             SqliteDataAccess.SaveGlider(NewGlider);
             int NewGliderID = SqliteDataAccess.LoadLastSavedGlider();
             return NewGliderID;

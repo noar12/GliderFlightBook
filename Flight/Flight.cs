@@ -198,14 +198,14 @@ namespace GliderFlightBook.Flight
         public string GetCSVExportLine(string GliderName, string TakeOffSite, string LandingSite,
          string FlightType, string Comment)
         {
-            CultureInfo CH = new CultureInfo("en-EN");
+            CultureInfo CultureEN = new CultureInfo("en-EN");
             string delimiter = ";";
             string TakeOffDate = GetTakeOffDateString();
             string TakeOffHeight = _FlightHeights[0].ToString("F0");
             string MaximumHeight = GetMaximumHeight().ToString("F0");
-            string CumulativeElevation = GetCumulativeElevation().ToString("F0");
-            string FlownDistance = (GetFlownDistance(0) / 1000).ToString("F3", CH);
-            string HeightDifference = GetAltitudeDifference().ToString("F0");
+            string CumulativeElevation = GetCumulativeElevation().ToString("F0",CultureEN);
+            string FlownDistance = (GetFlownDistance(0) / 1000).ToString("F3", CultureEN);
+            string HeightDifference = GetAltitudeDifference().ToString("F0", CultureEN);
             string Duration = GetDuration().ToString("c");
 
             return TakeOffDate + delimiter
