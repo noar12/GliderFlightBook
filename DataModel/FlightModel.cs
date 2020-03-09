@@ -30,6 +30,17 @@ namespace GliderFlightBook
         public double MaxAltitude;
         public string File;
         public int FlightType;
-        public string Comment;
+        public string Comment
+        {
+            set
+            {
+                _Comment = value;
+            }
+            get
+            {
+                return _Comment.Replace(@"'", @"''");
+            }
+        }
+        private string _Comment;
     }
 }
